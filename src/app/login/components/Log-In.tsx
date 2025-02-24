@@ -1,9 +1,10 @@
 "use client";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import * as React from "react";
 import { useRouter } from 'next/navigation'
+import axios from "axios";
  
 
   const LogIn = () => {
@@ -19,13 +20,27 @@ import { useRouter } from 'next/navigation'
   const [password, setPassword] = useState<string>();
   const [error, setError]=useState<Error>({email:"", password:""});
 
+
+  const postData = async () => {
+    const response = await axios.post(`http://localhost:4007/user`, {
+      body:JSON.stringify({
+        email: "dgv",
+        password: "gfbnvfdj"
+      })
+    });
+    console.log("post",response);
+  };
+
+   useEffect(() => {
+      postData();
+    }, []);
+  
   const onClick = () => {
     if (email?.search(emailPattern) === -1){
       setError((prev) => ({ ...prev, email: "Invalid email. Use a format like example@gmail.com " }));
   }
   else{
     setError((prev) => ({ ...prev, email: "" }));
-    // router.push('/home')}
   };
   if(password?.search(passwordPattern)==-1){
     setError((prev) => ({ ...prev, password: "Weak password. Use numbers and symbols" }));
@@ -33,7 +48,7 @@ import { useRouter } from 'next/navigation'
 else{
     setError((prev) => ({ ...prev, password: "" }));
 }
-if(!error.password && !error.email){
+if(error.password===" " && error.email===" "){
     router.push('/home')}
 }
 
@@ -62,7 +77,7 @@ if(!error.password && !error.email){
                     <></>)}
         </div>
         <div>
-          <Input placeholder="Password" onChange={passwordChanged} />
+          <Input placeholder="Password" onChange={passwordChanged}/>
           {error.password? (
                   <div className="text-red-500">{error.password}</div>
                 ) : (
@@ -71,9 +86,6 @@ if(!error.password && !error.email){
         <Button className="bg-gray-400" onClick={onClick}>
           Let's go
         </Button>
-        <p className="text-center mt-2">
-          Already have an account? <a href="#">Log in</a>
-        </p>
       </div>
       </div>
       <div className="w-3/5 h-screen">
