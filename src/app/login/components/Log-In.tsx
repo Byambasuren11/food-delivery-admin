@@ -5,58 +5,46 @@ import { ChangeEvent, useEffect, useState } from "react";
 import * as React from "react";
 import { useRouter } from 'next/navigation'
 import axios from "axios";
- 
+
+type Login={
+  email:string;
+  password:string;
+}
 
   const LogIn = () => {
-    type Error={
-      email:string;
-      password:string;
-    }
   const router = useRouter()
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-   const passwordPattern=/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/
-
-  const [email, setEmail] = useState<string>();
-  const [password, setPassword] = useState<string>();
-  const [error, setError]=useState<Error>({email:"", password:""});
-
+  const [login, setLogin]=useState<Login>({email:"", password:""});
+  const [error, setError]=useState<Login>({email:"", password:""});
+  const emailPattern=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordPattern=/^(?=.*\d)(?=.*[a-zA-Z]).+$/;
 
   const postData = async () => {
-    const response = await axios.post(`http://localhost:4007/user`, {
-      body:JSON.stringify({
-        email: "dgv",
-        password: "gfbnvfdj"
-      })
-    });
+    const response = await axios.post(`http://localhost:4007/user`, login);
     console.log("post",response);
   };
-
-   useEffect(() => {
-      postData();
-    }, []);
   
-  const onClick = () => {
-    if (email?.search(emailPattern) === -1){
+  const handleClick = () => {
+    if (login.email?.search(emailPattern) === -1){
       setError((prev) => ({ ...prev, email: "Invalid email. Use a format like example@gmail.com " }));
   }
   else{
     setError((prev) => ({ ...prev, email: "" }));
   };
-  if(password?.search(passwordPattern)==-1){
+  if(login.password?.search(passwordPattern)==-1){
     setError((prev) => ({ ...prev, password: "Weak password. Use numbers and symbols" }));
 }
 else{
     setError((prev) => ({ ...prev, password: "" }));
 }
-if(error.password===" " && error.email===" "){
-    router.push('/home')}
+if(error.password==="" && error.email===""){
+    postData()
+    router.push(`/home`)}
 }
-
   const emailChanged = (event: ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
+    setLogin({...login ,email:event.target.value});
   };
   const passwordChanged = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
+    setLogin({...login ,password:event.target.value});
   };
   return (
     <div className="flex w-full justify-between h-screen">
@@ -70,6 +58,7 @@ if(error.password===" " && error.email===" "){
           <Input
             placeholder="Enter your email adress"
             onChange={emailChanged}
+            name="email"
           />
            {error.email ? (
                   <div className="text-red-500">{error.email}</div>
@@ -77,13 +66,13 @@ if(error.password===" " && error.email===" "){
                     <></>)}
         </div>
         <div>
-          <Input placeholder="Password" onChange={passwordChanged}/>
+          <Input placeholder="Password" onChange={passwordChanged} name="password"/>
           {error.password? (
                   <div className="text-red-500">{error.password}</div>
                 ) : (
                     <></>)}
         </div>
-        <Button className="bg-gray-400" onClick={onClick}>
+        <Button className="bg-gray-400" onClick={handleClick}>
           Let's go
         </Button>
       </div>
