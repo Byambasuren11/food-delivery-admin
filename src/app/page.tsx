@@ -1,20 +1,12 @@
 "use client";
-import LogIn from "@/app/login/components/Log-In";
+import LogIn from "@/app/components/Log-In";
 import axios from "axios";
 import { useEffect } from "react";
 
 export default function Home() {
-  const getData = async () => {
-    const response = await axios.get(`http://localhost:4007/users`);
-    console.log("fv",response);
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
   return (
     <>
-      <LogIn/>
+      <LogIn />
     </>
   );
 }
