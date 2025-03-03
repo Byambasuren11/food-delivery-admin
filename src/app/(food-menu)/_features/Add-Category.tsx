@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { PlusIcon } from "lucide-react";
 import { ChangeEvent, useState } from "react";
+import { FoodCategories } from "./FoodCategories";
 
 const AddCategory = () => {
   const [categoryName, setCategory] = useState({});
@@ -52,6 +53,7 @@ const AddCategory = () => {
             </DialogHeader>
           </DialogContent>
         </Dialog>
+        <FoodCategories />
       </div>
     </div>
   );

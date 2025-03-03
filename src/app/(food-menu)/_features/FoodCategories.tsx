@@ -37,11 +37,9 @@ export const FoodCategories = () => {
 
   return (
     <div>
-      Dishes category
       {categories.map((catergory, index) => {
         return <div key={index}>{catergory.categoryName}</div>;
       })}
-      <AddCategory />
     </div>
   );
 };
