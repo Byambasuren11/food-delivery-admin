@@ -1,8 +1,12 @@
-const foodMenu = () => {
+import AddCategory from "./_features/Add-Category";
+import { AddFood } from "./_features/Add-Food";
+
+const FoodMenu = () => {
   return (
-    <>
-      <div></div>
-    </>
+    <div className="bg-gray-200 h-screen w-[90%]">
+      <AddCategory />
+      <AddFood />
+    </div>
   );
 };
-export default foodMenu;
+export default FoodMenu;
