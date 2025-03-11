@@ -12,11 +12,13 @@ import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { PlusIcon } from "lucide-react";
 import { ChangeEvent, useState } from "react";
-import { FoodCategories } from "../_components/FoodCategories";
 
-const AddCategory = () => {
+const AddCategory = (props) => {
   const [categoryName, setCategory] = useState({});
   const [closeDialog, setCloseDialog] = useState(false);
+  const { categories } = props;
+  console.log("f", categories);
+
   const postData = async () => {
     const response = await axios.post(
       `http://localhost:4007/food-category`,
@@ -25,20 +27,32 @@ const AddCategory = () => {
     console.log("post", response);
     setCloseDialog(false);
   };
+
   const handleAddCategory = () => {
     setCloseDialog(true);
     postData();
   };
+
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     setCategory({ ...categoryName, categoryName: event.target.value });
   };
+
   return (
     <div className="flex justify-center">
-      <div className="bg-white w-[80%] rounded-xl p-4 mt-14 flex flex-col gap-3">
+      <div className="bg-white w-full rounded-xl p-4 mt-14 flex flex-col gap-3">
         <div>Dishes category</div>
         <div className="flex gap-3">
-          <div>
-            <FoodCategories />
+          <div className="flex gap-3 ">
+            {categories?.map((catergory, index) => {
+              return (
+                <Button
+                  className="border pl-3 pr-3 rounded-xl border-gray-200 bg-white text-black hover:bg-gray-100"
+                  key={index}
+                >
+                  {catergory.categoryName}
+                </Button>
+              );
+            })}
           </div>
           {closeDialog ? (
             <></>

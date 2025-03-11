@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
+import { AddFood } from "../_components/Add-Food";
+import AddCategory from "../_components/Add-Category";
 
 export const FoodCategories = () => {
   const [categories, setCategories] = useState([]);
@@ -35,17 +37,13 @@ export const FoodCategories = () => {
   console.log("categories", categories);
 
   return (
-    <div className="flex gap-3 ">
-      {categories.map((catergory, index) => {
-        return (
-          <Button
-            className="border pl-3 pr-3 rounded-xl border-gray-200 bg-white text-black hover:bg-gray-100"
-            key={index}
-          >
-            {catergory.categoryName}
-          </Button>
-        );
-      })}
-    </div>
+    <>
+      <div className="flex justify-center">
+        <div className="w-[80%] flex flex-col gap-6">
+          <AddCategory categories={categories} />
+          <AddFood categories={categories} />
+        </div>
+      </div>
+    </>
   );
 };

@@ -1,6 +1,6 @@
 import Menu from "@/components/Menu";
 import NomLogo from "@/components/Nom-Nom-Logo";
-import AddCategory from "../(food-menu)/_features/Add-Category";
+import AddCategory from "../(food-menu)/_components/Add-Category";
 import FoodMenu from "../(food-menu)";
 
 const Home = () => {
