@@ -13,7 +13,6 @@ import { PlusIcon } from "lucide-react";
 
 export const AddFood = (props) => {
   const { categories } = props;
-  console.log("gf", categories);
   return (
     <>
       <div className="flex flex-col gap-6">
@@ -53,7 +52,6 @@ export const AddFood = (props) => {
                         <div>
                           <div>Food image</div>
                           <Input
-                          
                             placeholder=""
                             className="border-dashed h-32"
                           />
