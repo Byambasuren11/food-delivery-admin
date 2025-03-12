@@ -26,7 +26,7 @@ const LogIn = () => {
     console.log("post", response);
   };
 
-  const handleClick = () => {
+  const handleClickLogin = () => {
     if (login.email?.search(emailPattern) === -1) {
       setError((prev) => ({
         ...prev,
@@ -86,7 +86,7 @@ const LogIn = () => {
               <></>
             )}
           </div>
-          <Button className="bg-gray-400" onClick={handleClick}>
+          <Button className="bg-gray-400" onClick={handleClickLogin}>
             Let's go
           </Button>
         </div>
