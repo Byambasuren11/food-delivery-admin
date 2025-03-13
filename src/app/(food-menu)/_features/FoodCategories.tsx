@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
-import { AddFood } from "../_components/Add-Food";
+import { AddFood } from "./Add-Food";
 import AddCategory from "../_components/Add-Category";
+import { Categories } from "./Categories";
 
 export const FoodCategories = () => {
   const [categories, setCategories] = useState([]);
@@ -40,7 +41,7 @@ export const FoodCategories = () => {
     <>
       <div className="flex justify-center">
         <div className="w-[80%] flex flex-col gap-6">
-          <AddCategory categories={categories} />
+          <Categories categories={categories} />
           <AddFood categories={categories} />
         </div>
       </div>

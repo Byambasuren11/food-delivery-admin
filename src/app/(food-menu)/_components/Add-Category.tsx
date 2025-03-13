@@ -13,11 +13,21 @@ import axios from "axios";
 import { PlusIcon } from "lucide-react";
 import { ChangeEvent, useState } from "react";
 
-const AddCategory = (props) => {
-  const [categoryName, setCategory] = useState({});
+type Category = {
+  categoryName: String;
+};
+
+type AddCategoryProps = {
+  categories: Category[];
+};
+
+const AddCategory = (props: AddCategoryProps) => {
+  const [categoryName, setCategory] = useState<Category>({
+    categoryName: "",
+  });
   const [closeDialog, setCloseDialog] = useState(false);
   const { categories } = props;
-  console.log("f", categories);
+  console.log("categories1", categories);
 
   const postData = async () => {
     const response = await axios.post(
@@ -43,13 +53,13 @@ const AddCategory = (props) => {
         <div>Dishes category</div>
         <div className="flex gap-3">
           <div className="flex gap-3 ">
-            {categories?.map((catergory, index) => {
+            {categories?.map((element, index) => {
               return (
                 <Button
                   className="border pl-3 pr-3 rounded-xl border-gray-200 bg-white text-black hover:bg-gray-100"
                   key={index}
                 >
-                  {catergory.categoryName}
+                  {element.categoryName}
                 </Button>
               );
             })}
