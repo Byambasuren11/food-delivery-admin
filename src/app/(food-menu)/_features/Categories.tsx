@@ -30,9 +30,7 @@ export const Categories = (props: AddCategoryProps) => {
     setCategory({ ...categoryName, categoryName: event.target.value });
   };
 
-  const onClick=()=>{
-    
-  }
+  const onClick = () => {};
 
   return (
     <div className="flex justify-center">
@@ -42,7 +40,12 @@ export const Categories = (props: AddCategoryProps) => {
           <div className="flex gap-3 ">
             {categories?.map((element, index) => {
               return (
-                <CatergoryButton name={element.categoryName} index={index} onClick={onClick}/>
+                <CatergoryButton
+                  name={element.categoryName}
+                  key={index}
+                  index={index}
+                  onClick={onClick}
+                />
               );
             })}
           </div>

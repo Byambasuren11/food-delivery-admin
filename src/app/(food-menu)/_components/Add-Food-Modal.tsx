@@ -10,17 +10,24 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { PlusIcon } from "lucide-react";
+import image from "next/image";
 import { ChangeEvent, useState } from "react";
 
-
 type AddCategoryModalProps = {
-  onChangeName: (event: ChangeEvent<HTMLInputElement>) => void;
-  onChangePrice: (event: ChangeEvent<HTMLInputElement>) => void;
-  onChangeIngredients: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onClick: () => void;
+};
+type a = {
+  file: string;
 };
 
-export const AddFoodModal = (  {onChangeName,onChangePrice, onChangeIngredients
-  }: AddCategoryModalProps) => {
+export const AddFoodModal = ({ onChange, onClick }: AddCategoryModalProps) => {
+  const [file, setFile] = useState([]);
+
+  const handleFile = (event: ChangeEvent<HTMLInputElement>) => {
+    setFile(URL.createObjectURL(event.target.files[0]));
+    onChange(event);
+  };
   return (
     <Dialog>
       <DialogTrigger className="rounded-full bg-red-500 p-2">
@@ -33,24 +40,46 @@ export const AddFoodModal = (  {onChangeName,onChangePrice, onChangeIngredients
             <div className="flex gap-3 w-full">
               <div>
                 <div>Food name</div>
-                <Input placeholder="Type food name" onChange={onChangeName} />
+                <Input
+                  placeholder="Type food name"
+                  onChange={onChange}
+                  name="foodName"
+                />
               </div>
               <div>
                 <div>Food price</div>
-                <Input placeholder="Enter price..." />
+                <Input
+                  placeholder="Enter price..."
+                  onChange={onChange}
+                  name="price"
+                />
               </div>
             </div>
             <div className="flex justify-start items-start flex-col">
               <div>Ingredients</div>
-              <Input placeholder="List ingredients..." className="h-20 " />
+              <Input
+                placeholder="List ingredients..."
+                className="h-20 "
+                onChange={onChange}
+                name="ingredients"
+              />
             </div>
             <div>
               <div>Food image</div>
-              <Input placeholder="" className="border-dashed h-32" />
+              <Input
+                type="file"
+                placeholder="Image"
+                onChange={handleFile}
+                name="image"
+                // onChange={onChange}
+                className="border-dashed h-32"
+              />
+
+              <img src={file} />
             </div>
           </DialogDescription>
           <DialogDescription className="flex justify-end">
-            <Button>Add Dish</Button>
+            <Button onClick={onClick}>Add Dish</Button>
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
