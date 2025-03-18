@@ -10,53 +10,22 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { PlusIcon } from "lucide-react";
-import image from "next/image";
 import { ChangeEvent, useState } from "react";
 import axios from "axios";
-
-const NEXT_PUBLIC_CLOUDINARY_API_KEY = "838167655913687";
-const CLOUDNARY_UPLOAD_PRESENT = "FoodPhoto";
-const CLOUDNARY_CLOUD_NAME = "dp1u0n6zb";
-const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${CLOUDNARY_CLOUD_NAME}/image/upload`;
 
 type AddCategoryModalProps = {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onClick: () => void;
+  file1: string;
+  handleFile: (event: ChangeEvent<HTMLInputElement>) => void;
 };
-type a = {
-  file: string;
-};
 
-export const AddFoodModal = ({ onChange, onClick }: AddCategoryModalProps) => {
-  const [file1, setFile] = useState<string>("");
-
-  const handleFile = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event?.target?.files ? event?.target?.files[0] : "";
-    const url = URL.createObjectURL(file as Blob);
-    setFile(url);
-    uploadCloudinary();
-    onChange(event);
-  };
-  const uploadCloudinary = async () => {
-    if (!file1) alert("Please insert photo");
-
-    try {
-      const file = new FormData();
-      file.append("file", file1);
-      file.append("upload_present", CLOUDNARY_UPLOAD_PRESENT);
-      file.append("api_key", NEXT_PUBLIC_CLOUDINARY_API_KEY);
-
-      const response = await axios.post(CLOUDINARY_URL, file, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      console.log(response);
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
-
+export const AddFoodModal = ({
+  onChange,
+  onClick,
+  handleFile,
+  file1,
+}: AddCategoryModalProps) => {
   return (
     <Dialog>
       <DialogTrigger className="rounded-full bg-red-500 p-2">

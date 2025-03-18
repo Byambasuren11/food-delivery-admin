@@ -4,6 +4,11 @@ import { AddFoodModal } from "../_components/Add-Food-Modal";
 import axios from "axios";
 import { Categories } from "./Categories";
 
+const NEXT_PUBLIC_CLOUDINARY_API_KEY = "838167655913687";
+const CLOUDNARY_UPLOAD_PRESET = "ml_default";
+const CLOUDNARY_CLOUD_NAME = "dp1u0n6zb";
+const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${CLOUDNARY_CLOUD_NAME}/image/upload`;
+
 type Category = {
   categoryName: String;
   _id: String;
@@ -31,11 +36,20 @@ export const AddFood = (props: AddCategoryProps) => {
   });
   const [foodGet, setFoodGet] = useState();
 
+  const [file1, setFile] = useState<string>("");
+
+  const handleFile = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event?.target?.files ? event?.target?.files[0] : "";
+    const url = URL.createObjectURL(file as Blob);
+    setFile(url);
+  };
+
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     setFood({ ...food, [event.target.name]: event.target.value });
   };
 
   const onClick = async (_id: string) => {
+    uploadCloudinary();
     await axios.post(`http://localhost:4007/food`, { ...food, category: _id });
   };
 
@@ -43,8 +57,23 @@ export const AddFood = (props: AddCategoryProps) => {
     const response = await axios.get(`http://localhost:4007/food`);
     setFoodGet(response.data.data);
   };
-  console.log(foodGet);
+  const uploadCloudinary = async (img: string | Blob) => {
+    try {
+      const file = new FormData();
+      file.append("file", img);
+      file.append("upload_preset", CLOUDNARY_UPLOAD_PRESET);
+      file.append("api_key", NEXT_PUBLIC_CLOUDINARY_API_KEY);
 
+      const response = await axios.post(CLOUDINARY_URL, file, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      setFood({ ...food, image: response.data.secure_url });
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
   useEffect(() => {
     getFood();
   }, []);
@@ -62,6 +91,8 @@ export const AddFood = (props: AddCategoryProps) => {
                     <AddFoodModal
                       onChange={onChange}
                       onClick={() => onClick(element._id)}
+                      handleFile={handleFile}
+                      file1={file1}
                     />
                     <div className="text-xs w-28 ">Add new Dish to Salads </div>
                   </div>
@@ -70,7 +101,10 @@ export const AddFood = (props: AddCategoryProps) => {
                   {foodGet?.map((el, index) => {
                     if (el.category === element._id) {
                       return (
-                        <div className="border-dashed border-red-600 border w-[250px] h-[200px] rounded-xl flex flex-col p-3 mt-[24px] gap-3">
+                        <div
+                          key={index}
+                          className="border-dashed border-red-600 border w-[250px] h-[200px] rounded-xl flex flex-col p-3 mt-[24px] gap-3"
+                        >
                           <div className="w-full h-3/5 border border-gray-100 rounded-2xl flex flex-col"></div>
                           <div className="flex justify-between text-sm">
                             <p className="text-red-600"> {el.foodName}</p>
