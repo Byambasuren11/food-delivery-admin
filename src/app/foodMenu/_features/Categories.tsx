@@ -18,7 +18,6 @@ export const Categories = (props: AddCategoryProps) => {
   });
   const [closeDialog, setCloseDialog] = useState(false);
   const { categories } = props;
-  console.log("categories1", categories);
 
   const handleAddCategory = async () => {
     setCloseDialog(true);

@@ -27,14 +27,12 @@ const AddCategory = (props: AddCategoryProps) => {
   });
   const [closeDialog, setCloseDialog] = useState(false);
   const { categories } = props;
-  console.log("categories1", categories);
 
   const postData = async () => {
     const response = await axios.post(
       `http://localhost:4007/food-category`,
       categoryName
     );
-    console.log("post", response);
     setCloseDialog(false);
   };
 

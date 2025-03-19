@@ -1,7 +1,6 @@
 import Menu from "@/components/Menu";
 import NomLogo from "@/components/Nom-Nom-Logo";
-import AddCategory from "../food-menu/_components/Add-Category";
-import FoodMenu from "../food-menu/page";
+import { FoodCategories } from "./_features/FoodCategories";
 
 const Home = () => {
   return (
@@ -10,7 +9,9 @@ const Home = () => {
         <NomLogo />
         <Menu />
       </div>
-      <FoodMenu />
+      <div className="bg-gray-200 h-full w-[90%]">
+        <FoodCategories />
+      </div>
     </div>
   );
 };

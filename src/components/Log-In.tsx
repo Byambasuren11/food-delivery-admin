@@ -45,7 +45,7 @@ const LogIn = () => {
     }
     if (error.password == " " && error.email == " ") {
       postData();
-      router.push(`/home`);
+      router.push(`/foodMenu`);
     }
   };
   const emailChanged = (event: ChangeEvent<HTMLInputElement>) => {

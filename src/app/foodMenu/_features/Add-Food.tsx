@@ -5,13 +5,13 @@ import axios from "axios";
 import { Categories } from "./Categories";
 
 const NEXT_PUBLIC_CLOUDINARY_API_KEY = "838167655913687";
-const CLOUDNARY_UPLOAD_PRESET = "ml_default";
+const CLOUDINARY_UPLOAD_PRESET = "ml_default";
 const CLOUDNARY_CLOUD_NAME = "dp1u0n6zb";
 const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${CLOUDNARY_CLOUD_NAME}/image/upload`;
 
 type Category = {
-  categoryName: String;
-  _id: String;
+  categoryName: string;
+  _id: string;
 };
 
 type FoodType = {
@@ -40,28 +40,35 @@ export const AddFood = (props: AddCategoryProps) => {
 
   const handleFile = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event?.target?.files ? event?.target?.files[0] : "";
-    const url = URL.createObjectURL(file as Blob);
-    setFile(url);
+    const reader = new FileReader();
+    reader.onload = () => {
+      const url = reader.result as string;
+      setFile(url);
+    };
+    reader.readAsDataURL(file);
   };
-
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setFood({ ...food, [event.target.name]: event.target.value });
-  };
+  console.log("ho", food);
 
   const onClick = async (_id: string) => {
-    uploadCloudinary();
-    await axios.post(`http://localhost:4007/food`, { ...food, category: _id });
+    await uploadCloudinary().then(async (response) => {
+      await axios.post(`http://localhost:4007/food`, {
+        ...food,
+        category: _id,
+        image: response,
+      });
+    });
   };
 
   const getFood = async () => {
     const response = await axios.get(`http://localhost:4007/food`);
     setFoodGet(response.data.data);
   };
-  const uploadCloudinary = async (img: string | Blob) => {
+
+  const uploadCloudinary = async () => {
     try {
       const file = new FormData();
-      file.append("file", img);
-      file.append("upload_preset", CLOUDNARY_UPLOAD_PRESET);
+      file.append("file", file1);
+      file.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
       file.append("api_key", NEXT_PUBLIC_CLOUDINARY_API_KEY);
 
       const response = await axios.post(CLOUDINARY_URL, file, {
@@ -69,7 +76,8 @@ export const AddFood = (props: AddCategoryProps) => {
           "Content-Type": "multipart/form-data",
         },
       });
-      setFood({ ...food, image: response.data.secure_url });
+      console.log(response);
+      return response.data.secure_url;
     } catch (error) {
       console.log("error", error);
     }
@@ -89,10 +97,10 @@ export const AddFood = (props: AddCategoryProps) => {
                   {element.categoryName}
                   <div className="border-dashed border-red-600 border w-[250px] h-[200px] rounded-xl flex flex-col justify-center items-center">
                     <AddFoodModal
-                      onChange={onChange}
                       onClick={() => onClick(element._id)}
                       handleFile={handleFile}
                       file1={file1}
+                      setFood={setFood}
                     />
                     <div className="text-xs w-28 ">Add new Dish to Salads </div>
                   </div>
@@ -105,7 +113,9 @@ export const AddFood = (props: AddCategoryProps) => {
                           key={index}
                           className="border-dashed border-red-600 border w-[250px] h-[200px] rounded-xl flex flex-col p-3 mt-[24px] gap-3"
                         >
-                          <div className="w-full h-3/5 border border-gray-100 rounded-2xl flex flex-col"></div>
+                          <div className="w-full h-3/5 border border-gray-100 rounded-2xl flex flex-col overflow-hidden object-cover">
+                            <img src={el.image} />
+                          </div>
                           <div className="flex justify-between text-sm">
                             <p className="text-red-600"> {el.foodName}</p>
                             <p>{el.price}$</p>

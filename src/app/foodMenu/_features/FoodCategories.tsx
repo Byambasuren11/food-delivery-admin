@@ -35,8 +35,6 @@ export const FoodCategories = () => {
     return <div>{error}</div>;
   }
 
-  console.log("categories", categories);
-
   return (
     <>
       <div className="flex justify-center">
