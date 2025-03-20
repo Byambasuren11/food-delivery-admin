@@ -47,7 +47,6 @@ export const AddFood = (props: AddCategoryProps) => {
     };
     reader.readAsDataURL(file);
   };
-  console.log("ho", food);
 
   const onClick = async (_id: string) => {
     await uploadCloudinary().then(async (response) => {

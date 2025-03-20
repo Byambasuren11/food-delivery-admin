@@ -20,14 +20,12 @@ type FoodType = {
   image: string;
   category: string;
 };
-
 type AddCategoryModalProps = {
   onClick: () => void;
   file1: string;
   handleFile: (event: ChangeEvent<HTMLInputElement>) => void;
   setFood: Dispatch<SetStateAction<FoodType>>;
 };
-
 const SignupSchema = Yup.object().shape({
   foodName: Yup.string()
     .min(2, "Too Short!")
@@ -43,7 +41,6 @@ const SignupSchema = Yup.object().shape({
     .required("Required"),
   image: Yup.mixed().required("Required"),
 });
-
 export const AddFoodModal = ({
   onClick,
   handleFile,
@@ -119,19 +116,21 @@ export const AddFoodModal = ({
                       type="file"
                       className="border p-2 w-full rounded-xl"
                       onChange={(event) => {
-                        if (event.currentTarget.files) {
-                          setFieldValue("image", event.currentTarget.files[0]);
-                          handleFile();
-                        }
+                        handleFile(event);
+                        setFieldValue(
+                          "image",
+                          event.currentTarget.files?.[0] || null
+                        );
                       }}
                     />
                     {errors.image ? (
                       <div className="text-red-500">{errors.image}</div>
                     ) : null}
+
                     {file1 && (
                       <img
                         src={file1}
-                        className="mt-2 w-40 h-40 object-cover"
+                        className="mt-2 w-full h-40 object-cover"
                       />
                     )}
                   </div>

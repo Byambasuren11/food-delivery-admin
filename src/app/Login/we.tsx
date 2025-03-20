@@ -30,7 +30,7 @@ const ValidationSchemaExample = () => (
         console.log(values);
       }}
     >
-      {({ errors, touched }) => (
+      {({ errors}) => (
         <Form>
           <Field name="firstName" placeholder="First Name" />
           {errors.firstName ? (
