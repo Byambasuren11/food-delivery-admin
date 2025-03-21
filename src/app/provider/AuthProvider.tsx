@@ -1,27 +1,33 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useJwt } from "react-jwt";
-import { useNavigate } from "react-router-dom";
 
-const AuthProvider = () => {
-  const [token, setToken] = useState(localStorage.getItem("token") || null);
-  const { decodedToken, isExpired } = useJwt(token);
-  const navigate = useNavigate(); // useNavigate replaces useHistory in React Router v6
+const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const token = localStorage.getItem("token");
+  const { decodedToken, isExpired } = useJwt(token!);
+  const router = useRouter(); // useNavigate replaces useHistory in React Router v6
 
   useEffect(() => {
     if (!token || isExpired) {
-      navigate("/login"); // Redirect to login page if no token or token is expired
+      router.push("/Login"); // Redirect to login page if no token or token is expired
     }
-  }, [token, isExpired, navigate]);
+    else{
+      router.push("/foodMenu");
+    }
+    console.log(token);
+  }, [token, isExpired]);
 
-  if (isExpired) {
-    return <div>Your session has expired. Please log in again.</div>;
-  }
+  // if (isExpired) {
+  //   return <div>Your session has expired. Please log in again.</div>;
+  // }
 
-  if (!decodedToken) {
-    return <div>Invalid token. Please log in again.</div>;
-  }
+  // if (!decodedToken) {
+  //   return <div>Invalid token. Please log in again.</div>;
+  // }
 
-  return <div>Welcome {decodedToken.name}!</div>;
+  return children;
 };
 
 export default AuthProvider;

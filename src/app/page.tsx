@@ -1,6 +1,7 @@
 "use client";
 
-import LogIn from "@/components/Log-In";
+import LogIn from "./Login/page";
+
 // import axios from "axios";
 // import { useEffect } from "react";
 

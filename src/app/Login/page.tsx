@@ -1,10 +1,11 @@
 "use client";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+
 import { ChangeEvent, useEffect, useState } from "react";
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 type Login = {
   email: string;
@@ -24,6 +25,7 @@ const LogIn = () => {
       login
     );
     console.log("post", response);
+    localStorage.setItem("token", response.data.token);
   };
 
   const handleClickLogin = () => {
