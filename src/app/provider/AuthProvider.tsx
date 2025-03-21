@@ -1,26 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useJwt } from "react-jwt";
-const token = "Your JWT";
+import { useNavigate } from "react-router-dom";
 
-const Example = () => {
+const AuthProvider = () => {
+  const [token, setToken] = useState(localStorage.getItem("token") || null);
   const { decodedToken, isExpired } = useJwt(token);
-  /*
-    If is a valid jwt, 'decodedToken' will be a object
-    it could look like:
-    {
-      "name": "Gustavo",
-      "iat": 1596408259,
-      "exp": 4752168259
+  const navigate = useNavigate(); // useNavigate replaces useHistory in React Router v6
+
+  useEffect(() => {
+    if (!token || isExpired) {
+      navigate("/login"); // Redirect to login page if no token or token is expired
     }
+  }, [token, isExpired, navigate]);
 
-    'isExpired' will return a boolean
-    true => your token is expired
-    false => your token is not expired
-  */
+  if (isExpired) {
+    return <div>Your session has expired. Please log in again.</div>;
+  }
 
-  return (
-    <div>
-      ...
-    </div>
-  );
+  if (!decodedToken) {
+    return <div>Invalid token. Please log in again.</div>;
+  }
+
+  return <div>Welcome {decodedToken.name}!</div>;
 };
+
+export default AuthProvider;
