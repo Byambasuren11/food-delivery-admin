@@ -2,6 +2,7 @@ import Menu from "@/components/Menu";
 import NomLogo from "@/components/Nom-Nom-Logo";
 import { FoodCategories } from "./_features/FoodCategories";
 
+
 const Home = () => {
   return (
     <div className="flex">

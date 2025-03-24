@@ -104,7 +104,7 @@ export const AddFood = (props: AddCategoryProps) => {
                     <div className="text-xs w-28 ">Add new Dish to Salads </div>
                   </div>
                 </div>
-                <div className="flex gap-5">
+                <div className="flex gap-3">
                   {foodGet?.map((el, index) => {
                     if (el.category === element._id) {
                       return (
