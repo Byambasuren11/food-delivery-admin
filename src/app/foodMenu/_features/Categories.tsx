@@ -3,6 +3,9 @@ import axios from "axios";
 import { ChangeEvent, useState } from "react";
 import { AddCategoryModal } from "../_components/Add-Category-Modal";
 import { CatergoryButton } from "../_components/CategoryButton";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ToastContainer } from "react-toastify";
+
 
 type Category = {
   categoryName: string;
