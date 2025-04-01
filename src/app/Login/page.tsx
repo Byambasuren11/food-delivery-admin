@@ -26,7 +26,7 @@ const LogIn = () => {
     );
     console.log("post", response);
     localStorage.setItem("token", response.data.token);
-    localStorage.setItem("user", response.data.user.email);
+    localStorage.setItem("user", JSON.stringify(response.data.user));
   };
 
   const handleClickLogin = () => {

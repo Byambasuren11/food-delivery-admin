@@ -42,7 +42,7 @@ export const FoodCategories = () => {
     <>
       <div className="flex justify-center">
         <div className="w-[80%] flex flex-col gap-6">
-          <Categories categories={categories} />
+          <Categories />
        
           <AddFood categories={categories} />
         </div>

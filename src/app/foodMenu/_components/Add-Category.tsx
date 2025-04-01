@@ -53,8 +53,7 @@ export const AddCategoryModal1 = ({
         type: "active",
       });
 
-      // await refetch();
-
+      await refetch();
       toast("🦄 Successfully added category", {
         position: "top-right",
         autoClose: 5000,

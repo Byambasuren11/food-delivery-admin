@@ -1,11 +1,12 @@
+"use client";
 import Menu from "@/components/Menu";
 import NomLogo from "@/components/Nom-Nom-Logo";
 import Orders from "./_features/Orders";
 import { useUser } from "../provider/User-Provider";
 
 const Home = () => {
-  // const{ email, role}=useUser();
-  // console.log("email",email)
+  const { email } = useUser();
+  console.log("email", email);
 
   return (
     <div className="flex">
