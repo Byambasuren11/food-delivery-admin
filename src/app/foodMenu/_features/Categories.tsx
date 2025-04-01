@@ -1,11 +1,15 @@
 "use client";
 import axios from "axios";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { AddCategoryModal } from "../_components/Add-Category-Modal";
 import { CatergoryButton } from "../_components/CategoryButton";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
-
+import { AddCategoryModal1 } from "../_components/Add-Category";
 
 type Category = {
   categoryName: string;
@@ -19,6 +23,25 @@ export const Categories = (props: AddCategoryProps) => {
   const [categoryName, setCategory] = useState<Category>({
     categoryName: "",
   });
+
+  const [addCategory, setAddCategory] = useState(false);
+
+  // Fetch categories using React Query
+  const {
+    data: categoryList,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const response = await axios.get("http://localhost:4007/food-category");
+      return response.data.data;
+    },
+  });
+
+  useEffect(() => {
+    document.body.style.overflow = addCategory ? "hidden" : "auto";
+  }, [addCategory]);
   const [closeDialog, setCloseDialog] = useState(false);
   const { categories } = props;
 
@@ -54,9 +77,9 @@ export const Categories = (props: AddCategoryProps) => {
           {closeDialog ? (
             <></>
           ) : (
-            <AddCategoryModal
-              onChange={onChange}
-              handleAddCategory={handleAddCategory}
+            <AddCategoryModal1
+              setAddCategory={setAddCategory}
+              refetch={refetch}
             />
           )}
         </div>

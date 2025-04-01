@@ -4,13 +4,16 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { AddFood } from "./Add-Food";
-import AddCategory from "../_components/Add-Category";
+import { AddCategoryModal1 } from "../_components/Add-Category";
 import { Categories } from "./Categories";
+import { useQuery } from "@tanstack/react-query";
 
 export const FoodCategories = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+
 
   const getCategories = async () => {
     try {
@@ -40,6 +43,7 @@ export const FoodCategories = () => {
       <div className="flex justify-center">
         <div className="w-[80%] flex flex-col gap-6">
           <Categories categories={categories} />
+       
           <AddFood categories={categories} />
         </div>
       </div>
