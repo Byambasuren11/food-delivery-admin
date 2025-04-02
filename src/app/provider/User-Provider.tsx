@@ -3,7 +3,7 @@ import { useState, createContext, useContext, useEffect } from "react";
 
 type userContextType = {
   email: string;
-  addrress:string
+  addrress: string;
 };
 
 const UserContext = createContext<userContextType>({} as userContextType);
@@ -14,13 +14,18 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     setLoading(true);
-    const user = JSON.parse(localStorage.getItem("user"));
-    setLoading(false);
-    setUser(user!);
+    const user1 = localStorage.getItem("user");
+    if (user1) {
+      const user = JSON.parse(user1);
+      setLoading(false);
+      setUser(user);
+    }
   }, []);
 
   return (
-    <UserContext.Provider value={{ email: user?.email }}>
+    <UserContext.Provider
+      value={{ email: user?.email, addrress: user.addrress }}
+    >
       {loading ? <div>Loading</div> : children}
     </UserContext.Provider>
   );

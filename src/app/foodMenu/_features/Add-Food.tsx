@@ -2,17 +2,13 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { AddFoodModal } from "../_components/Add-Food-Modal";
 import axios from "axios";
-import { Categories } from "./Categories";
+import { useCategory } from "@/app/provider/Category-Provider";
 
 const NEXT_PUBLIC_CLOUDINARY_API_KEY = "838167655913687";
 const CLOUDINARY_UPLOAD_PRESET = "ml_default";
 const CLOUDNARY_CLOUD_NAME = "dp1u0n6zb";
 const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${CLOUDNARY_CLOUD_NAME}/image/upload`;
 
-type Category = {
-  categoryName: string;
-  _id: string;
-};
 
 type FoodType = {
   foodName: string;
@@ -22,11 +18,7 @@ type FoodType = {
   category: string;
 };
 
-type AddCategoryProps = {
-  categories: Category[];
-};
-export const AddFood = (props: AddCategoryProps) => {
-  const { categories } = props;
+export const AddFood = () => {
   const [food, setFood] = useState<FoodType>({
     foodName: "",
     price: 0,
@@ -36,6 +28,9 @@ export const AddFood = (props: AddCategoryProps) => {
   });
   const [foodGet, setFoodGet] = useState();
 
+  const { categories } = useCategory();
+
+  console.log(categories, "categories");
   const [file1, setFile] = useState<string>("");
 
   const handleFile = (event: ChangeEvent<HTMLInputElement>) => {
@@ -47,7 +42,6 @@ export const AddFood = (props: AddCategoryProps) => {
     };
     reader.readAsDataURL(file);
   };
-
   const onClick = async (_id: string) => {
     await uploadCloudinary().then(async (response) => {
       await axios.post(`http://localhost:4007/food`, {

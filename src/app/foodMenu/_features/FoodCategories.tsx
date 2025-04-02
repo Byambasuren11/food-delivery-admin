@@ -13,8 +13,6 @@ export const FoodCategories = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-
-
   const getCategories = async () => {
     try {
       setLoading(true);
@@ -43,8 +41,8 @@ export const FoodCategories = () => {
       <div className="flex justify-center">
         <div className="w-[80%] flex flex-col gap-6">
           <Categories />
-       
-          <AddFood categories={categories} />
+
+          <AddFood />
         </div>
       </div>
     </>

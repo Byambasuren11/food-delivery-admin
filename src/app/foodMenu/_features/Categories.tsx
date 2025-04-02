@@ -9,10 +9,13 @@ import {
 } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
 import { AddCategoryModal1 } from "../_components/Add-Category";
+import { useCategory } from "@/app/provider/Category-Provider";
 
 export const Categories = () => {
   const [addCategory, setAddCategory] = useState(false);
   const [closeDialog, setCloseDialog] = useState(false);
+
+  const { setCategories } = useCategory();
 
   const {
     data: categoryList,
@@ -23,7 +26,10 @@ export const Categories = () => {
     queryFn: async () => {
       setCloseDialog(true);
       const response = await axios.get("http://localhost:4007/food-category");
+
+      setCategories(categoryList);
       setCloseDialog(false);
+
       return response.data.data;
     },
   });

@@ -16,6 +16,8 @@ import { useRouter } from "next/navigation";
 const Home = () => {
   const router = useRouter();
   const { email } = useUser();
+
+  console.log(email, "email");
   const onClick = () => {
     localStorage.clear();
     router.push("/Login");
