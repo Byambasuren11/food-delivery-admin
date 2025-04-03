@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -90,7 +90,7 @@ const LogIn = () => {
             )}
           </div>
           <Button className="bg-gray-400" onClick={handleClickLogin}>
-            Let's go
+            Let&apos;s go
           </Button>
         </div>
       </div>

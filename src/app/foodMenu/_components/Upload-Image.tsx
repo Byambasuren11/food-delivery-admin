@@ -1,8 +1,6 @@
 import { RemoveFormattingIcon } from "lucide-react";
-import React, { useState } from "react";
-const UploadImage = () => {
-  const [file, setFile] = useState([]);
 
+const UploadImage = () => {
   return (
     <>
       <div className="relative">

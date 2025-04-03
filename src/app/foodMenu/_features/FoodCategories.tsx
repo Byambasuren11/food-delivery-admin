@@ -2,16 +2,12 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Button } from "@/components/ui/button";
 import { AddFood } from "./Add-Food";
-import { AddCategoryModal1 } from "../_components/Add-Category";
 import { Categories } from "./Categories";
-import { useQuery } from "@tanstack/react-query";
 
 export const FoodCategories = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const getCategories = async () => {
     try {
@@ -24,16 +20,13 @@ export const FoodCategories = () => {
       setLoading(false);
     }
   };
+  console.log(categories);
   useEffect(() => {
     getCategories();
   }, []);
 
   if (loading) {
     return <div>...Loading</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
   }
 
   return (
