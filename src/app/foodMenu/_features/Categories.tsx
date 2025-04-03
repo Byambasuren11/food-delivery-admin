@@ -1,15 +1,10 @@
 "use client";
 import axios from "axios";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CatergoryButton } from "../_components/CategoryButton";
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from "@tanstack/react-query";
-import { ToastContainer } from "react-toastify";
+import { useQuery } from "@tanstack/react-query";
 import { AddCategoryModal1 } from "../_components/Add-Category";
-import { useCategory } from "@/app/provider/Category-Provider";
+import { category, useCategory } from "@/app/provider/Category-Provider";
 
 export const Categories = () => {
   const [addCategory, setAddCategory] = useState(false);
@@ -17,11 +12,7 @@ export const Categories = () => {
 
   const { setCategories } = useCategory();
 
-  const {
-    data: categoryList,
-    isLoading,
-    refetch,
-  } = useQuery({
+  const { data: categoryList = [], refetch } = useQuery<category[]>({
     queryKey: ["categories"],
     queryFn: async () => {
       setCloseDialog(true);

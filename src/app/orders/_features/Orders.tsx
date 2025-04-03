@@ -2,7 +2,6 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -16,13 +15,34 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { ChevronDown } from "lucide-react";
+
+type foodOrderItems = {
+  food: string;
+  quantity: number;
+};
+type user = {
+  email: string;
+  _id: string;
+};
+type Order = {
+  user: user;
+  foodOrderItems: foodOrderItems[];
+  createdAt: Date;
+  totalPrice: number;
+  status: string;
+};
 
 const Orders = () => {
-  const [order, setOrder] = useState();
+  const [order, setOrder] = useState<Order[]>([]);
   const getOrders = async () => {
     const response = await axios.get("http://localhost:4007/food-order");
     console.log(response.data.data);
@@ -55,9 +75,21 @@ const Orders = () => {
                   <Checkbox />
                 </TableCell>
                 <TableCell>{index + 1}</TableCell>
-                <TableCell>{element.user}</TableCell>
-                <TableCell>{}</TableCell>
-                <TableCell>{element.createdAt.split("T")[0]}</TableCell>
+                <TableCell>{element?.user.email}</TableCell>
+                <TableCell>
+                  <Popover>
+                    <PopoverTrigger className="flex gap-3">
+                      {element.foodOrderItems.length}
+                      <ChevronDown size={16} />
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      Place content for the popover here.
+                    </PopoverContent>
+                  </Popover>
+                </TableCell>
+                <TableCell>
+                  {element.createdAt.toString().split("T")[0]}
+                </TableCell>
                 <TableCell className="flex">
                   <p>$</p>
                   {element.totalPrice}

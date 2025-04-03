@@ -8,18 +8,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { PlusIcon } from "lucide-react";
+import { FoodType } from "../_features/Add-Food";
 
-type FoodType = {
-  foodName: string;
-  price: number;
-  ingredients: string;
-  image: string;
-  category: string;
-};
 type AddCategoryModalProps = {
   onClick: () => void;
   file1: string;
@@ -41,6 +35,7 @@ const SignupSchema = Yup.object().shape({
     .required("Required"),
   image: Yup.mixed().required("Required"),
 });
+
 export const AddFoodModal = ({
   onClick,
   handleFile,
@@ -51,7 +46,7 @@ export const AddFoodModal = ({
     <Formik
       initialValues={{
         foodName: "",
-        price: "",
+        price: 0,
         ingredients: "",
         image: null,
       }}
@@ -62,7 +57,7 @@ export const AddFoodModal = ({
         onClick();
       }}
     >
-      {({ errors, touched, setFieldValue }) => (
+      {({ errors, setFieldValue }) => (
         <Dialog>
           <DialogTrigger className="rounded-full bg-red-500 p-2">
             <PlusIcon color="white" size="14" />

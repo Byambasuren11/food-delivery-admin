@@ -6,7 +6,7 @@ import {
   useMutation,
 } from "@tanstack/react-query";
 import axios from "axios";
-import { PlusIcon, X } from "lucide-react";
+import { PlusIcon} from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -19,17 +19,16 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { category } from "@/app/provider/Category-Provider";
 
 type AddCatergoryModalProps = {
   setAddCategory: Dispatch<SetStateAction<boolean>>;
   refetch: (
     options?: RefetchOptions
-  ) => Promise<QueryObserverResult<any, Error>>;
+  ) => Promise<QueryObserverResult<category[], Error>>;
 };
 
-function timeout(delay: number) {
-  return new Promise((res) => setTimeout(res, delay));
-}
+
 
 export const AddCategoryModal1 = ({
   setAddCategory,
@@ -47,7 +46,7 @@ export const AddCategoryModal1 = ({
     onSuccess: async () => {
       setAddCategory(false);
 
-      // await timeout(3000);
+
       await queryClient.refetchQueries({
         queryKey: ["categories"],
         type: "active",

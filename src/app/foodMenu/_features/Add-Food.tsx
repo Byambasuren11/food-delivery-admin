@@ -9,8 +9,13 @@ const CLOUDINARY_UPLOAD_PRESET = "ml_default";
 const CLOUDNARY_CLOUD_NAME = "dp1u0n6zb";
 const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${CLOUDNARY_CLOUD_NAME}/image/upload`;
 
-
-type FoodType = {
+export type FoodType = {
+  foodName: string;
+  price: number;
+  ingredients: string;
+  image: string | null;
+};
+export type Food = {
   foodName: string;
   price: number;
   ingredients: string;
@@ -24,9 +29,8 @@ export const AddFood = () => {
     price: 0,
     ingredients: "",
     image: "",
-    category: "",
   });
-  const [foodGet, setFoodGet] = useState();
+  const [foodGet, setFoodGet] = useState<Food[]>([]);
 
   const { categories } = useCategory();
 
@@ -40,7 +44,7 @@ export const AddFood = () => {
       const url = reader.result as string;
       setFile(url);
     };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(file as Blob);
   };
   const onClick = async (_id: string) => {
     await uploadCloudinary().then(async (response) => {
@@ -99,7 +103,7 @@ export const AddFood = () => {
                   </div>
                 </div>
                 <div className="flex gap-3">
-                  {foodGet?.map((el, index) => {
+                  {foodGet?.map((el: Food, index) => {
                     if (el.category === element._id) {
                       return (
                         <div
