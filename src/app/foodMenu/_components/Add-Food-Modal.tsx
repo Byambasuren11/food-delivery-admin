@@ -52,7 +52,6 @@ export const AddFoodModal = ({
       }}
       validationSchema={SignupSchema}
       onSubmit={(values) => {
-        console.log("Submitted:", values);
         setFood(values);
         onClick();
       }}

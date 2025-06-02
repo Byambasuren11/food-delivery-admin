@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import {
   useState,
   createContext,
@@ -10,6 +11,7 @@ import {
 type categoryContextType = {
   categories: category[];
   setCategories: Dispatch<SetStateAction<category[]>>;
+  deleteCategory: (id: string) => Promise<void>
 };
 
 export type category = {
@@ -21,6 +23,9 @@ export type category = {
 const CategoryContext = createContext<categoryContextType>(
   {} as categoryContextType
 );
+export const deleteCategory=async(id:string)=>{
+await axios.delete(`http://localhost:4007/food-category/${id}`);
+}
 
 export const CategoryProvider = ({
   children,
@@ -34,6 +39,7 @@ export const CategoryProvider = ({
       value={{
         setCategories,
         categories,
+        deleteCategory
       }}
     >
       {children}

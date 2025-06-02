@@ -13,15 +13,15 @@ const Menu = () => {
   };
   return (
     <div className="flex flex-col gap-5 text-xs">
-      <div className="flex gap-3" onClick={foodMenu}>
+      <div className="flex gap-3 cursor-pointer" onClick={foodMenu}>
         <LayoutDashboardIcon size={18} />
         <p>Food menu</p>
       </div>
-      <div className="flex gap-3" onClick={Orders}>
+      <div className="flex gap-3 cursor-pointer" onClick={Orders}>
         <Truck size={18} />
         <p>Orders</p>
       </div>
-      <div className="flex gap-3">
+      <div className="flex gap-3 cursor-pointer">
         <Settings size={18} />
         <p>Settings</p>
       </div>

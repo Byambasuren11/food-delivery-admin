@@ -45,7 +45,6 @@ const Orders = () => {
   const [order, setOrder] = useState<Order[]>([]);
   const getOrders = async () => {
     const response = await axios.get("http://localhost:4007/food-order");
-    console.log(response.data.data);
     setOrder(response.data.data);
   };
   useEffect(() => {

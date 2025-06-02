@@ -41,6 +41,8 @@ export const Categories = () => {
                   name={element.categoryName}
                   key={index}
                   index={index}
+                  categoryId={element._id}
+                  refetch={refetch}
                 />
               );
             })}

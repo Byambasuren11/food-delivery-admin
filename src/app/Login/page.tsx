@@ -24,7 +24,6 @@ const LogIn = () => {
       `http://localhost:4007/auth/login`,
       login
     );
-    console.log("post", response);
     localStorage.setItem("token", response.data.token);
     localStorage.setItem("user", JSON.stringify(response.data.user));
   };

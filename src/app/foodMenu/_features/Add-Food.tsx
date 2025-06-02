@@ -34,7 +34,6 @@ export const AddFood = () => {
 
   const { categories } = useCategory();
 
-  console.log(categories, "categories");
   const [file1, setFile] = useState<string>("");
 
   const handleFile = (event: ChangeEvent<HTMLInputElement>) => {
@@ -73,7 +72,6 @@ export const AddFood = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(response);
       return response.data.secure_url;
     } catch (error) {
       console.log("error", error);
