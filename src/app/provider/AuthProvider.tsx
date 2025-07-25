@@ -19,13 +19,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     console.log(token);
   }, [token, isExpired]);
 
-  // if (isExpired) {
-  //   return <div>Your session has expired. Please log in again.</div>;
-  // }
-
-  // if (!decodedToken) {
-  //   return <div>Invalid token. Please log in again.</div>;
-  // }
 
   return children;
 };

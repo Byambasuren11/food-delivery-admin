@@ -15,8 +15,8 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectTrigger,
-  SelectValue,
+  // SelectTrigger,
+  // SelectValue,
 } from "@/components/ui/select";
 import {
   Popover,
@@ -96,10 +96,10 @@ const Orders = () => {
                 <TableCell>{}</TableCell>
                 <TableCell>
                   <Select>
-                    <SelectTrigger className="w-fit">
+                    {/* <SelectTrigger className="w-fit">
                       {" "}
                       <SelectValue placeholder="Select a delivery state" />
-                    </SelectTrigger>
+                    </SelectTrigger> */}
                     <SelectContent>
                       <SelectGroup>
                         <SelectItem value="PENDING">
